@@ -39,4 +39,4 @@ nb-configuration.xml
 .env
 
 # application.propertires
-src/main/resources/application.properties
+src/main/resources/
