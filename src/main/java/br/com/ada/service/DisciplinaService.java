@@ -1,8 +1,11 @@
 package br.com.ada.service;
 
+import br.com.ada.dto.DisciplinaResponse;
 import br.com.ada.mapper.DisciplinaMapper;
 import br.com.ada.model.Disciplina;
+import br.com.ada.model.Professor;
 import br.com.ada.repositorio.DisciplinaRepository;
+import br.com.ada.repositorio.ProfessorRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -15,10 +18,13 @@ public class DisciplinaService {
     private final DisciplinaMapper disciplinaMapper;
     private final DisciplinaRepository disciplinaRepository;
 
+    private final ProfessorRepository professorRepository;
+
     @Inject
-    public DisciplinaService(DisciplinaMapper disciplinaMapper, DisciplinaRepository disciplinaRepository){
+    public DisciplinaService(DisciplinaMapper disciplinaMapper, DisciplinaRepository disciplinaRepository, ProfessorRepository professorRepository){
         this.disciplinaMapper = disciplinaMapper;
         this.disciplinaRepository = disciplinaRepository;
+        this.professorRepository = professorRepository;
     }
 
     public List<Disciplina> listarDisciplinas() {
@@ -45,5 +51,14 @@ public class DisciplinaService {
     @Transactional
     public void deletarDisciplina(Integer id) {
         disciplinaRepository.deleteById(id);
+    }
+
+    @Transactional
+    public DisciplinaResponse atualizarProfessorDaDisciplina(Integer idDisciplina, Integer idProfessor) {
+        Professor professor = professorRepository.findById(idProfessor);
+        Disciplina disciplina = disciplinaRepository.findById(idDisciplina);
+        disciplina.setTitular(professor);
+        disciplinaRepository.persist(disciplina);
+        return disciplinaMapper.toResponse(disciplinaRepository.findById(idDisciplina));
     }
 }

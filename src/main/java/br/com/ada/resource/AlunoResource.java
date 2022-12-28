@@ -32,12 +32,7 @@ public class AlunoResource {
     @Path("/{id}")
     public Response listarAlunoPorId(@PathParam("id") Integer id){
         AlunoResponse alunoResponse = service.listarAlunoPorId(id);
-        if(Objects.isNull(alunoResponse)){
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } else {
-            return Response.ok(alunoResponse).build();
-        }
-
+        return Response.ok(alunoResponse).build();
     }
 
     @POST
@@ -62,6 +57,12 @@ public class AlunoResource {
     public Response deletarAluno(@PathParam("id") Integer id){
         service.deletarAluno(id);
         return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+    @PATCH
+    @Path("/{id-aluno}/tutor/{id-tutor}")
+    public Response atualizarTutorDoAluno(@PathParam("id-aluno") Integer idAluno, @PathParam("id-tutor") Integer idProfessor){
+        return Response.ok(service.atualizarTutorDoAluno(idAluno, idProfessor)).build();
     }
 
 }

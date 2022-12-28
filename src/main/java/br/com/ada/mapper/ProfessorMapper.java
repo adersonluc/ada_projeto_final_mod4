@@ -26,6 +26,8 @@ public class ProfessorMapper {
         return ProfessorResponse.builder()
                 .id(professor.getId())
                 .nome(professor.getNome())
+                .disciplina(professor.getDisciplina())
+                .alunos(professor.getAlunos())
                 .build();
 
     }

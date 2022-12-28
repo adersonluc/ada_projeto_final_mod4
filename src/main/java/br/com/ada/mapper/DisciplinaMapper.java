@@ -26,6 +26,7 @@ public class DisciplinaMapper {
         return DisciplinaResponse.builder()
                 .id(disciplina.getId())
                 .nome(disciplina.getNome())
+                .titular(disciplina.getTitular())
                 .build();
 
     }

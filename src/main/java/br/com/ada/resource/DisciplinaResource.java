@@ -61,4 +61,10 @@ public class DisciplinaResource {
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
+    @PATCH
+    @Path("/{id-disciplina}/professor/{id-professor}")
+    public Response atualizarProfessorDaDisciplina(@PathParam("id-disciplina") Integer idDisciplina, @PathParam("id-professor") Integer idProfessor){
+        return Response.ok(service.atualizarProfessorDaDisciplina(idDisciplina, idProfessor)).build();
+    }
+
 }

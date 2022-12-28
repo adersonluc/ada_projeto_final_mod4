@@ -1,5 +1,10 @@
 package br.com.ada.resource;
 
+import br.com.ada.dto.AlunoResponse;
+import br.com.ada.dto.DisciplinaResponse;
+import br.com.ada.dto.ProfessorResponse;
+import br.com.ada.mapper.DisciplinaMapper;
+import br.com.ada.mapper.ProfessorMapper;
 import br.com.ada.model.Professor;
 import br.com.ada.service.ProfessorService;
 
@@ -16,6 +21,8 @@ import java.util.Objects;
 public class ProfessorResource {
 
     private ProfessorService service;
+
+    private DisciplinaMapper disciplinaMapper;
 
     @Inject
     public ProfessorResource(ProfessorService service){
@@ -37,6 +44,20 @@ public class ProfessorResource {
         } else {
             return Response.ok(professor).build();
         }
+    }
+
+    @GET
+    @Path("/{id-professor}/disciplinas")
+    public Response buscarDisciplinaPorTutorId(@PathParam("id-professor") Integer idProfessor){
+        DisciplinaResponse disciplinaResponse = service.buscarDisciplinaPorTutorId(idProfessor);
+        return Response.ok(disciplinaResponse).build();
+    }
+
+    @GET
+    @Path("/{id-professor}/tutorados")
+    public Response buscarTutoradosPorId(@PathParam("id-professor") Integer idProfessor){
+        List<AlunoResponse> alunoResponses = service.buscarTutoradosPorId(idProfessor);
+        return Response.ok(alunoResponses).build();
     }
 
     @POST
