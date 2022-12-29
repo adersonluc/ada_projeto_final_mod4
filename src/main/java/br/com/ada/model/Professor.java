@@ -25,13 +25,12 @@ public class Professor {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @NotNull
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "titular")
     @JsonIgnore
     private Disciplina disciplina;
 
-    @NotNull
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "tutor")
+//    @JsonIgnore
     private List<Aluno> alunos;
 
     public Professor() {

@@ -19,13 +19,12 @@ public class DisciplinaResponse {
     @Size(min = 2, message = "O número deve possuir mais de um caracter")
     private String nome;
 
-    @NotNull
-    private Professor titular;
+    private String titular;
 
     public DisciplinaResponse() {
     }
 
-    public DisciplinaResponse(Integer id, String nome, Professor titular) {
+    public DisciplinaResponse(Integer id, String nome, String titular) {
         this.id = id;
         this.nome = nome;
         this.titular = titular;
@@ -47,11 +46,11 @@ public class DisciplinaResponse {
         this.nome = nome;
     }
 
-    public Professor getTitular() {
+    public String getTitular() {
         return titular;
     }
 
-    public void setTitular(Professor titular) {
+    public void setTitular(String titular) {
         this.titular = titular;
     }
 }

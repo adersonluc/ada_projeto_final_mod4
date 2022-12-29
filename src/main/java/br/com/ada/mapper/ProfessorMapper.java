@@ -1,5 +1,6 @@
 package br.com.ada.mapper;
 
+import br.com.ada.dto.ProfessorRequest;
 import br.com.ada.dto.ProfessorResponse;
 import br.com.ada.model.Professor;
 
@@ -21,15 +22,28 @@ public class ProfessorMapper {
 
     public ProfessorResponse toResponse(Professor professor){
 
-        Objects.requireNonNull(professor, "Professor não deve ser nulo");
+        try {
+            return ProfessorResponse.builder()
+                    .id(professor.getId())
+                    .nome(professor.getNome())
+                    .disciplina(professor.getDisciplina().getNome())
+                    .alunos(professor.getAlunos().stream().map(aluno -> aluno.getNome()).collect(Collectors.toList()))
+                    .build();
+        } catch(NullPointerException e){
+            return ProfessorResponse.builder()
+                    .id(professor.getId())
+                    .nome(professor.getNome())
+                    .build();
+        }
+    }
 
-        return ProfessorResponse.builder()
-                .id(professor.getId())
-                .nome(professor.getNome())
-                .disciplina(professor.getDisciplina())
-                .alunos(professor.getAlunos())
+    public Professor toEntity(ProfessorRequest professorRequest) {
+
+        Objects.requireNonNull(professorRequest, "O professor não deve ser nulo");
+
+        return Professor.builder()
+                .nome(professorRequest.getNome())
                 .build();
 
     }
-
 }

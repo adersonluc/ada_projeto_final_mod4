@@ -3,6 +3,7 @@ package br.com.ada.service;
 
 import br.com.ada.dto.AlunoResponse;
 import br.com.ada.dto.DisciplinaResponse;
+import br.com.ada.dto.ProfessorRequest;
 import br.com.ada.dto.ProfessorResponse;
 import br.com.ada.mapper.AlunoMapper;
 import br.com.ada.mapper.DisciplinaMapper;
@@ -37,31 +38,29 @@ public class ProfessorService {
         this.alunoMapper = alunoMapper;
     }
 
-    public List<Professor> listarProfessores() {
-        log.info("Listando professores");
-        List<Professor> professores = professorRepository.listAll();
+    public List<ProfessorResponse> listarProfessores() {
+        List<ProfessorResponse> professores = professorRepository.listAll().stream()
+                .map(professorMapper::toResponse).collect(Collectors.toList());
         return professores;
     }
 
-    public Professor getProfessorById(Integer id) {
-        log.info("Listando professor");
-        Professor professor = professorRepository.findById(id);
-        return professor;
+    public ProfessorResponse getProfessorById(Integer id) {
+        ProfessorResponse professorResponse = professorMapper.toResponse(professorRepository.findById(id));
+        return professorResponse;
     }
 
     @Transactional
-    public void salvarProfessor(Professor professor) {
-        log.info("Salvando o professor");
-        professorRepository.persist(professor);
+    public void salvarProfessor(ProfessorRequest professorRequest) {
+        professorRepository.persist(professorMapper.toEntity(professorRequest));
     }
 
     @Transactional
-    public Professor alterarProfessor(Integer id, Professor professor) {
+    public ProfessorResponse alterarProfessor(Integer id, Professor professor) {
         log.info("Alterando o professor");
         Professor professorAlterado = professorRepository.findById(id);
         professorAlterado.setNome(professor.getNome());
         professorRepository.persist(professorAlterado);
-        return professorAlterado;
+        return professorMapper.toResponse(professorAlterado);
     }
 
     @Transactional

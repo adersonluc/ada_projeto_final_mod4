@@ -2,9 +2,9 @@ package br.com.ada.resource;
 
 import br.com.ada.dto.AlunoResponse;
 import br.com.ada.dto.DisciplinaResponse;
+import br.com.ada.dto.ProfessorRequest;
 import br.com.ada.dto.ProfessorResponse;
 import br.com.ada.mapper.DisciplinaMapper;
-import br.com.ada.mapper.ProfessorMapper;
 import br.com.ada.model.Professor;
 import br.com.ada.service.ProfessorService;
 
@@ -13,7 +13,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.Objects;
 
 @Path("/professores")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -31,19 +30,15 @@ public class ProfessorResource {
 
     @GET
     public Response listarProfessores() {
-        List<Professor> professores = service.listarProfessores();
+        List<ProfessorResponse> professores = service.listarProfessores();
         return Response.ok(professores).build();
     }
 
     @GET
     @Path("/{id}")
     public Response listarProfessorPorId(@PathParam("id") Integer id){
-        Professor professor = service.getProfessorById(id);
-        if(Objects.isNull(professor)){
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } else {
-            return Response.ok(professor).build();
-        }
+        ProfessorResponse professorResponse = service.getProfessorById(id);
+        return Response.ok(professorResponse).build();
     }
 
     @GET
@@ -61,20 +56,16 @@ public class ProfessorResource {
     }
 
     @POST
-    public Response salvarProfessor(Professor professor){
-        service.salvarProfessor(professor);
+    public Response salvarProfessor(ProfessorRequest professorRequest){
+        service.salvarProfessor(professorRequest);
         return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
     @Path("/{id}")
     public Response alterarProfessor(@PathParam("id") Integer id, Professor professor){
-        Professor professorAlterado = service.alterarProfessor(id, professor);
-        if(Objects.isNull(professorAlterado)){
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } else {
-            return Response.ok(professorAlterado).build();
-        }
+        ProfessorResponse professorAlterado = service.alterarProfessor(id, professor);
+        return Response.ok(professorAlterado).build();
     }
 
     @DELETE

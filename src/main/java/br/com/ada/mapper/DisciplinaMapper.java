@@ -1,5 +1,6 @@
 package br.com.ada.mapper;
 
+import br.com.ada.dto.DisciplinaRequest;
 import br.com.ada.dto.DisciplinaResponse;
 import br.com.ada.model.Disciplina;
 
@@ -12,8 +13,6 @@ import java.util.stream.Collectors;
 public class DisciplinaMapper {
 
     public List<DisciplinaResponse> toResponse(List<Disciplina> listaDeDisciplinas){
-        Objects.requireNonNull(listaDeDisciplinas, "Lista de Disciplinas não deve ser nula");
-
         return listaDeDisciplinas.stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
@@ -21,14 +20,23 @@ public class DisciplinaMapper {
 
     public DisciplinaResponse toResponse(Disciplina disciplina){
 
-        Objects.requireNonNull(disciplina, "Disciplina não deve ser nula");
-
-        return DisciplinaResponse.builder()
-                .id(disciplina.getId())
-                .nome(disciplina.getNome())
-                .titular(disciplina.getTitular())
-                .build();
-
+        try {
+            return DisciplinaResponse.builder()
+                    .id(disciplina.getId())
+                    .nome(disciplina.getNome())
+                    .titular(disciplina.getTitular().getNome())
+                    .build();
+        } catch(NullPointerException e){
+            return DisciplinaResponse.builder()
+                    .id(disciplina.getId())
+                    .nome(disciplina.getNome())
+                    .build();
+        }
     }
 
+    public Disciplina toEntity(DisciplinaRequest disciplinaRequest) {
+        return Disciplina.builder()
+                .nome(disciplinaRequest.getNome())
+                .build();
+    }
 }

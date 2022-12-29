@@ -1,5 +1,7 @@
 package br.com.ada.resource;
 
+import br.com.ada.dto.DisciplinaRequest;
+import br.com.ada.dto.DisciplinaResponse;
 import br.com.ada.model.Disciplina;
 import br.com.ada.service.DisciplinaService;
 
@@ -29,17 +31,13 @@ public class DisciplinaResource {
     @GET
     @Path("/{id}")
     public Response listarDisciplinaPorId(@PathParam("id") Integer id){
-        Disciplina disciplina = service.listarDisciplinaPorId(id);
-        if(Objects.isNull(disciplina)){
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } else {
-            return Response.ok(disciplina).build();
-        }
+        DisciplinaResponse disciplinaResponse = service.listarDisciplinaPorId(id);
+       return Response.ok(disciplinaResponse).build();
     }
 
     @POST
-    public Response salvarDisciplina(Disciplina disciplina){
-        service.salvarDisciplina(disciplina);
+    public Response salvarDisciplina(DisciplinaRequest disciplinaRequest){
+        service.salvarDisciplina(disciplinaRequest);
         return  Response.status(Response.Status.CREATED).build();
     }
 
@@ -47,11 +45,7 @@ public class DisciplinaResource {
     @Path("/{id}")
     public Response alterarDisciplina(@PathParam("id") Integer id, Disciplina disciplina){
         Disciplina disciplinaAlterada = service.alterarDisciplina(id, disciplina);
-        if(Objects.isNull(disciplinaAlterada)){
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } else {
-            return Response.ok(disciplinaAlterada).build();
-        }
+        return Response.ok(disciplinaAlterada).build();
     }
 
     @DELETE

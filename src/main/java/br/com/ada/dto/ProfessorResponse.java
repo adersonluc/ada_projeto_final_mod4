@@ -21,16 +21,14 @@ public class ProfessorResponse {
     @Size(min = 2, message = "O número deve possuir mais de um caracter")
     private String nome;
 
-    @NotNull
-    private Disciplina disciplina;
+    private String disciplina;
 
-    @NotNull
-    private List<Aluno> alunos;
+    private List<String> alunos;
 
     public ProfessorResponse() {
     }
 
-    public ProfessorResponse(Integer id, String nome, Disciplina disciplina, List<Aluno> alunos) {
+    public ProfessorResponse(Integer id, String nome, String disciplina, List<String> alunos) {
         this.id = id;
         this.nome = nome;
         this.disciplina = disciplina;
@@ -53,19 +51,19 @@ public class ProfessorResponse {
         this.nome = nome;
     }
 
-    public Disciplina getDisciplina() {
+    public String getDisciplina() {
         return disciplina;
     }
 
-    public void setDisciplina(Disciplina disciplina) {
+    public void setDisciplina(String disciplina) {
         this.disciplina = disciplina;
     }
 
-    public List<Aluno> getAlunos() {
+    public List<String> getAlunos() {
         return alunos;
     }
 
-    public void setAlunos(List<Aluno> alunos) {
+    public void setAlunos(List<String> alunos) {
         this.alunos = alunos;
     }
 }

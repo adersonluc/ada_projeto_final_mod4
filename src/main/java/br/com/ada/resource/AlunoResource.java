@@ -45,11 +45,7 @@ public class AlunoResource {
     @Path("/{id}")
     public Response alterarAluno(@PathParam("id") Integer id, AlunoRequest alunoRequest){
         AlunoResponse alunoAlterado = service.alterarAluno(id, alunoRequest);
-        if(Objects.isNull(alunoAlterado)){
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } else {
-            return Response.ok(alunoAlterado).build();
-        }
+        return Response.ok(alunoAlterado).build();
     }
 
     @DELETE

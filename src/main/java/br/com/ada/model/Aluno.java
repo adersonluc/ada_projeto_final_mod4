@@ -23,7 +23,6 @@ public class Aluno {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tutor")
     private Professor tutor;

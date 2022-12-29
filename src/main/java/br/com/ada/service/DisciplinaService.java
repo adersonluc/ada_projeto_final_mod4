@@ -1,5 +1,6 @@
 package br.com.ada.service;
 
+import br.com.ada.dto.DisciplinaRequest;
 import br.com.ada.dto.DisciplinaResponse;
 import br.com.ada.mapper.DisciplinaMapper;
 import br.com.ada.model.Disciplina;
@@ -27,17 +28,17 @@ public class DisciplinaService {
         this.professorRepository = professorRepository;
     }
 
-    public List<Disciplina> listarDisciplinas() {
-        return disciplinaRepository.listAll();
+    public List<DisciplinaResponse> listarDisciplinas() {
+        return disciplinaMapper.toResponse(disciplinaRepository.listAll());
     }
 
-    public Disciplina listarDisciplinaPorId(Integer id) {
-        return disciplinaRepository.findById(id);
+    public DisciplinaResponse listarDisciplinaPorId(Integer id) {
+        return disciplinaMapper.toResponse(disciplinaRepository.findById(id));
     }
 
     @Transactional
-    public void salvarDisciplina(Disciplina disciplina) {
-        disciplinaRepository.persist(disciplina);
+    public void salvarDisciplina(DisciplinaRequest disciplinaRequest) {
+        disciplinaRepository.persist(disciplinaMapper.toEntity(disciplinaRequest));
     }
 
     @Transactional
