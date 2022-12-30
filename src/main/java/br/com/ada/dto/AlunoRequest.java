@@ -1,8 +1,11 @@
 package br.com.ada.dto;
 
+import lombok.Builder;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@Builder
 public class AlunoRequest {
 
     @NotBlank(message = "O nome não deve estar em branco")
